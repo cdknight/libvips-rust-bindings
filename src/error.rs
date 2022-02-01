@@ -175,6 +175,7 @@ pub enum Error {
     HeifsaveError,
     HeifsaveBufferError,
     HeifsaveTargetError,
+    GifsaveBufferError,
     ThumbnailError,
     ThumbnailBufferError,
     ThumbnailImageError,
@@ -965,6 +966,10 @@ impl std::fmt::Display for Error {
             Error::HeifsaveTargetError => write!(
                 f,
                 "vips error: HeifsaveTargetError. Check error buffer for more details"
+            ),
+            Error::GifsaveBufferError => write!(
+                f,
+                "vips error: GifsaveBufferError. Check error buffer for more details"
             ),
             Error::ThumbnailError => write!(
                 f,

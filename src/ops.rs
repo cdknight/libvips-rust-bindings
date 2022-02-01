@@ -15298,6 +15298,25 @@ pub fn heifsave_buffer(inp: &VipsImage) -> Result<Vec<u8>> {
     }
 }
 
+/// VipsForeignSaveGifBuffer (gifsave_buffer), save image in GIF format 
+/// inp: `&VipsImage` -> Image to save
+/// returns `Vec<u8>` - Buffer to save to
+pub fn gifsave_buffer(inp: &VipsImage) -> Result<Vec<u8>> {
+    unsafe {
+        let inp_in: *mut bindings::VipsImage = inp.ctx;
+        let mut buffer_buf_size: u64 = 0;
+        let mut buffer_out: *mut c_void = null_mut();
+
+        let vips_op_response =
+            bindings::vips_gifsave_buffer(inp_in, &mut buffer_out, &mut buffer_buf_size, NULL);
+        utils::result(
+            vips_op_response,
+            utils::new_byte_array(buffer_out, buffer_buf_size),
+            Error::GifsaveBufferError,
+        )
+    }
+}
+
 /// Options for heifsave_buffer operation
 #[derive(Clone, Debug)]
 pub struct HeifsaveBufferOptions {
